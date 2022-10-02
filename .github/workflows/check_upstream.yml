@@ -1,0 +1,32 @@
+name: Check for upstream pico sdk releases
+
+# Check for upstream changes once a day, at 10am
+on:
+  schedule:
+    - cron:  '0 6 * * *'
+
+jobs:
+  check-upstream:
+    name: check remote tags of pico-sdk
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo content
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.PAT }}
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.8
+          cache: 'pip'
+      - name: install script dependencies
+        run: pip install -r requirements.txt
+
+      - name: set git credentials
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: execute build script
+        run: |
+          python build.py
