@@ -2,8 +2,6 @@ name: Publish Docker image
 
 on:
   push:
-    tags:
-      - *
 
 jobs:
   push_to_registry:
@@ -20,12 +18,14 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Extract metadata (tags, labels) for Docker
+        if: startsWith(github.event.ref, 'refs/tags')
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
           images: bojit/pico-sdk
 
       - name: Build and push Docker image
+        if: startsWith(github.event.ref, 'refs/tags')
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: .
