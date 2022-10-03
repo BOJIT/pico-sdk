@@ -20,6 +20,6 @@ RUN apt-get install -y \
     gdb-multiarch
 
 # Clone pico-sdk corresponding tag + get submodules
-RUN git clone --depth 1 -b 1.3.0 https://github.com/raspberrypi/pico-sdk.git
+RUN git clone --depth 1 -b 1.3.1 https://github.com/raspberrypi/pico-sdk.git
 RUN git -C pico-sdk submodule init
 RUN git -C pico-sdk submodule update --depth 1
