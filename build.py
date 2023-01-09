@@ -14,6 +14,7 @@ import git
 #---------------------------------- Constants ---------------------------------#
 
 SDK_URL = "https://github.com/raspberrypi/pico-sdk.git"
+THIS_URL = "https://github.com/BOJIT/pico-sdk.git"
 GIT_STR = "RUN git clone --depth 1 -b "
 TARGET = "Dockerfile"
 
@@ -47,12 +48,13 @@ def setDockerfileTag(tag):
 
 # Pull pico-sdk tags
 sdk_tags = getRemoteTags(SDK_URL)
+this_tags = getRemoteTags(THIS_URL)
 repo = git.Repo('.')
 
 # from oldest to newest release
 for tag in sdk_tags[::-1]:
     # see if local tag exists
-        if tag not in repo.tags:
+        if tag not in this_tags:
 
             print(tag)
 
